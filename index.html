@@ -5,22 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Escritório Adriana Matos — Configurador</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #0e0e0e;
-      --surface:   #161616;
-      --border:    #2a2a2a;
-      --border-hi: #3d3d3d;
-      --text:      #f0f0f0;
-      --muted:     #666;
+      --bg:        #0c0c0c;
+      --surface:   #141414;
+      --surface2:  #1a1a1a;
+      --border:    #252525;
+      --border-hi: #353535;
+      --text:      #ececec;
+      --text-sec:  #999;
+      --text-ter:  #555;
       --accent:    #ffffff;
-      --win:       #f0f0f0;
-      --mac:       #f0f0f0;
-      --radius:    18px;
-      --radius-sm: 10px;
+      --radius:    20px;
+      --radius-sm: 11px;
     }
 
     html { scroll-behavior: smooth; }
@@ -34,17 +34,16 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 0 24px 80px;
+      padding: 0 32px 80px;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── NOISE OVERLAY ── */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.025;
+      opacity: 0.03;
       pointer-events: none;
       z-index: 0;
     }
@@ -52,28 +51,26 @@
     /* ── HEADER ── */
     header {
       width: 100%;
-      max-width: 560px;
-      padding: 72px 0 48px;
+      max-width: 900px;
+      padding: 64px 0 52px;
       position: relative;
       z-index: 1;
     }
 
     .logo-mark {
-      width: 44px;
-      height: 44px;
-      border: 1.5px solid var(--border-hi);
-      border-radius: 12px;
+      width: 40px; height: 40px;
+      border: 1px solid var(--border-hi);
+      border-radius: 11px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
       background: var(--surface);
     }
 
     .logo-mark svg {
-      width: 20px;
-      height: 20px;
-      stroke: var(--muted);
+      width: 18px; height: 18px;
+      stroke: var(--text-ter);
       fill: none;
       stroke-width: 1.5;
       stroke-linecap: round;
@@ -81,66 +78,72 @@
 
     .eyebrow {
       font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      color: var(--muted);
+      font-size: 10.5px;
+      letter-spacing: 0.14em;
+      color: var(--text-ter);
       text-transform: uppercase;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     h1 {
-      font-size: clamp(26px, 5vw, 34px);
+      font-size: clamp(28px, 4vw, 40px);
       font-weight: 400;
-      line-height: 1.2;
-      letter-spacing: -0.02em;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
       color: var(--text);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .subtitle {
       font-size: 14px;
-      color: var(--muted);
-      line-height: 1.6;
-      max-width: 400px;
+      color: var(--text-sec);
+      line-height: 1.65;
+      max-width: 480px;
     }
 
-    /* ── CARDS ── */
+    /* ── CARDS GRID ── */
     .cards {
       width: 100%;
-      max-width: 560px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      max-width: 900px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
       position: relative;
       z-index: 1;
+    }
+
+    @media (max-width: 640px) {
+      .cards { grid-template-columns: 1fr; }
+      body { padding: 0 20px 60px; }
     }
 
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 28px 28px 24px;
+      padding: 28px 26px 26px;
+      display: flex;
+      flex-direction: column;
       transition: border-color 0.2s, transform 0.2s;
-      cursor: default;
     }
 
     .card:hover {
       border-color: var(--border-hi);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
     }
 
     .card-header {
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 20px;
+      gap: 12px;
+      margin-bottom: 26px;
     }
 
     .card-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 9px;
+      width: 34px; height: 34px;
+      border-radius: 8px;
       border: 1px solid var(--border-hi);
+      background: var(--surface2);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -148,186 +151,191 @@
     }
 
     .card-icon svg {
-      width: 16px;
-      height: 16px;
+      width: 15px; height: 15px;
       fill: none;
-      stroke: var(--muted);
+      stroke: var(--text-sec);
       stroke-width: 1.5;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
 
     .card-title {
-      font-size: 15px;
+      font-size: 17px;
       font-weight: 500;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.015em;
       color: var(--text);
     }
 
     .card-os {
       font-family: 'DM Mono', monospace;
       font-size: 10px;
-      color: var(--muted);
+      color: var(--text-ter);
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-top: 2px;
+      margin-top: 3px;
     }
 
-    /* steps */
+    /* ── STEPS ── */
     .steps {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      margin-bottom: 24px;
+      gap: 11px;
+      margin-bottom: 22px;
+      flex: 1;
     }
 
     .step {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.5;
+      gap: 11px;
     }
 
     .step-num {
       font-family: 'DM Mono', monospace;
       font-size: 10px;
-      color: #333;
-      background: #1e1e1e;
+      color: var(--text-ter);
+      background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: 5px;
-      width: 20px;
-      height: 20px;
+      width: 20px; height: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      margin-top: 1px;
+      margin-top: 2px;
     }
 
-    /* note box */
-    .note {
-      background: #111;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 12px 14px;
-      font-size: 12px;
-      color: #555;
-      line-height: 1.6;
-      margin-bottom: 24px;
-      font-family: 'DM Mono', monospace;
+    .step-text {
+      font-size: 14px;
+      color: var(--text-sec);
+      line-height: 1.55;
     }
 
-    .note strong {
-      color: #777;
+    .step-text strong {
+      color: var(--text);
       font-weight: 500;
     }
 
-    /* download button */
+    .step-text code {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--text);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    /* ── NOTE ── */
+    .note {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 11px 13px;
+      font-size: 12.5px;
+      color: var(--text-sec);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .note strong { color: var(--text); font-weight: 500; }
+
+    /* ── TERMINAL ── */
+    .terminal-note {
+      background: #080808;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 13px 15px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11.5px;
+      color: var(--text-sec);
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+
+    .terminal-note .prompt { color: var(--text-ter); }
+    .terminal-note .cmd    { color: var(--text-sec); }
+
+    /* ── BUTTON ── */
     .btn-download {
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
       background: var(--accent);
-      color: #0e0e0e;
+      color: #0c0c0c;
       border: none;
       border-radius: var(--radius-sm);
-      padding: 14px 18px;
+      padding: 14px 17px;
       font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 500;
       letter-spacing: -0.01em;
       cursor: pointer;
-      border: none;
-      text-decoration: none;
       transition: opacity 0.15s, transform 0.15s;
+      margin-top: auto;
     }
 
-    .btn-download:hover {
-      opacity: 0.88;
-      transform: translateY(-1px);
-    }
-
-    .btn-download:active {
-      transform: translateY(0);
-      opacity: 0.75;
-    }
+    .btn-download:hover  { opacity: 0.87; transform: translateY(-1px); }
+    .btn-download:active { transform: translateY(0); opacity: 0.72; }
+    .btn-download:disabled { opacity: 0.5; cursor: default; transform: none; }
 
     .btn-right {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       font-family: 'DM Mono', monospace;
       font-size: 10px;
       font-weight: 400;
-      color: #555;
-      letter-spacing: 0.05em;
+      color: #666;
+      letter-spacing: 0.06em;
     }
 
     .btn-right svg {
-      width: 13px;
-      height: 13px;
-      stroke: #555;
+      width: 12px; height: 12px;
+      stroke: #666;
       fill: none;
       stroke-width: 1.5;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
 
-    /* mac terminal note */
-    .terminal-note {
-      margin-top: 16px;
-      background: #0a0a0a;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 14px 16px;
-      font-family: 'DM Mono', monospace;
-      font-size: 11.5px;
-      color: #444;
-      line-height: 1.8;
-    }
-
-    .terminal-note .prompt { color: #2a2a2a; }
-    .terminal-note .cmd    { color: #666; }
-    .terminal-note .comment{ color: #2e2e2e; }
-
-    /* ── DIVIDER ── */
+    /* ── DIVIDER + FOOTER ── */
     .divider {
       width: 100%;
-      max-width: 560px;
+      max-width: 900px;
       height: 1px;
       background: var(--border);
-      margin: 32px 0;
+      margin: 36px 0 0;
       position: relative;
       z-index: 1;
     }
 
-    /* ── FOOTER ── */
     footer {
       width: 100%;
-      max-width: 560px;
+      max-width: 900px;
       font-size: 11px;
-      color: #333;
+      color: var(--text-ter);
       font-family: 'DM Mono', monospace;
       letter-spacing: 0.04em;
       display: flex;
       justify-content: space-between;
+      padding-top: 20px;
       position: relative;
       z-index: 1;
     }
 
-    /* ── FADE IN ── */
+    /* ── ANIMATIONS ── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(12px); }
+      from { opacity: 0; transform: translateY(14px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    header  { animation: fadeUp 0.5s ease both; }
-    .card:nth-child(1) { animation: fadeUp 0.5s 0.1s ease both; }
-    .card:nth-child(2) { animation: fadeUp 0.5s 0.18s ease both; }
-    .divider, footer   { animation: fadeUp 0.5s 0.28s ease both; }
+    header             { animation: fadeUp 0.5s ease both; }
+    .card:nth-child(1) { animation: fadeUp 0.5s 0.08s ease both; }
+    .card:nth-child(2) { animation: fadeUp 0.5s 0.16s ease both; }
+    .divider, footer   { animation: fadeUp 0.5s 0.26s ease both; }
   </style>
 </head>
 <body>
@@ -338,7 +346,7 @@
     </div>
     <p class="eyebrow">Escritório Adriana Matos</p>
     <h1>Configurador<br>de Ambiente</h1>
-    <p class="subtitle">Instala e configura automaticamente o ambiente necessário. Escolha o arquivo correspondente ao seu sistema.</p>
+    <p class="subtitle">Instala e configura automaticamente o ambiente necessário. Escolha o arquivo correspondente ao seu sistema operacional.</p>
   </header>
 
   <div class="cards">
@@ -347,7 +355,6 @@
     <div class="card">
       <div class="card-header">
         <div class="card-icon">
-          <!-- Windows logo simplificado -->
           <svg viewBox="0 0 16 16">
             <rect x="1" y="1" width="6.5" height="6.5" rx="0.5"/>
             <rect x="8.5" y="1" width="6.5" height="6.5" rx="0.5"/>
@@ -364,25 +371,23 @@
       <div class="steps">
         <div class="step">
           <span class="step-num">1</span>
-          <span>Baixe o arquivo <code>.bat</code> abaixo</span>
+          <span class="step-text">Baixe o arquivo <code>.bat</code> abaixo</span>
         </div>
         <div class="step">
           <span class="step-num">2</span>
-          <span>Clique com botão direito → <strong style="color:#888">Executar como administrador</strong></span>
+          <span class="step-text">Clique com botão direito → <strong>Executar como administrador</strong></span>
         </div>
         <div class="step">
           <span class="step-num">3</span>
-          <span>Não feche a janela durante o processo</span>
+          <span class="step-text">Não feche a janela durante o processo</span>
         </div>
       </div>
 
       <div class="note">
-        <strong>Nota —</strong> O Windows pode exibir um alerta do SmartScreen. Clique em "Mais informações" → "Executar assim mesmo".
+        <strong>Nota —</strong> O Windows pode exibir alerta do SmartScreen. Clique em "Mais informações" → "Executar assim mesmo".
       </div>
 
-      <button class="btn-download"
-         
-         onclick="baixar('https://github.com/escritorioadrianamatosadv-dev/configurador-de-ambiente/releases/download/v5.0/Escritorio_Adriana_Matos_v5.bat', 'Escritorio_Adriana_Matos_v5.bat', this)">
+      <button class="btn-download" onclick="baixar('https://github.com/escritorioadrianamatosadv-dev/configurador-de-ambiente/releases/download/v5.0/Escritorio_Adriana_Matos_v5.bat', this)">
         <span>Baixar para Windows</span>
         <span class="btn-right">
           .bat
@@ -395,7 +400,6 @@
     <div class="card">
       <div class="card-header">
         <div class="card-icon">
-          <!-- Apple logo simplificado -->
           <svg viewBox="0 0 16 16">
             <path d="M11.5 3.5c.8-.9.7-2.5.7-2.5s-1.5.1-2.4 1c-.8.8-.8 2.1-.8 2.1s1.6.2 2.5-1.6z"/>
             <path d="M13.5 10.5c-.5 1.1-1.1 1.8-1.8 2.3-.7.5-1.3.7-2 .7-.7 0-1.2-.2-1.8-.5-.5-.3-1-.5-1.6-.5-.6 0-1.2.2-1.7.5-.5.3-1 .5-1.6.5-.7 0-1.4-.3-2.1-.9C.2 12 0 10.5 0 9c0-1.4.4-2.6 1.1-3.5.7-.9 1.7-1.4 3-1.4.7 0 1.3.2 1.9.5.5.3 1 .5 1.5.5.5 0 1-.2 1.5-.5.6-.3 1.2-.5 1.9-.5 1 0 1.9.4 2.6 1.1-.9.6-1.4 1.4-1.4 2.5 0 1.2.6 2.2 1.4 2.8z"/>
@@ -410,15 +414,15 @@
       <div class="steps">
         <div class="step">
           <span class="step-num">1</span>
-          <span>Baixe o arquivo <code>.sh</code> abaixo</span>
+          <span class="step-text">Baixe o arquivo <code>.sh</code> abaixo</span>
         </div>
         <div class="step">
           <span class="step-num">2</span>
-          <span>Abra o Terminal e cole os comandos abaixo</span>
+          <span class="step-text">Abra o Terminal e cole os comandos abaixo</span>
         </div>
         <div class="step">
           <span class="step-num">3</span>
-          <span>Não feche o Terminal durante o processo</span>
+          <span class="step-text">Não feche o Terminal durante o processo</span>
         </div>
       </div>
 
@@ -427,11 +431,7 @@
         <span class="prompt">$ </span><span class="cmd">~/Downloads/Escritorio_Adriana_Matos_v5.sh</span>
       </div>
 
-      <br>
-
-      <button class="btn-download"
-         
-         onclick="baixar('https://github.com/escritorioadrianamatosadv-dev/configurador-de-ambiente/releases/download/v5.0/Escritorio_Adriana_Matos_v5.sh', 'Escritorio_Adriana_Matos_v5.sh', this)">
+      <button class="btn-download" onclick="baixar('https://github.com/escritorioadrianamatosadv-dev/configurador-de-ambiente/releases/download/v5.0/Escritorio_Adriana_Matos_v5.sh', this)">
         <span>Baixar para macOS</span>
         <span class="btn-right">
           .sh
@@ -446,29 +446,21 @@
 
   <footer>
     <span>© Escritório Adriana Matos</span>
-    <span>v5.0 · 2025</span>
+    <span>v5.0 · 2026</span>
   </footer>
 
 <script>
-async function baixar(url, nome, btn) {
+function baixar(url, btn) {
+  const a = document.createElement('a');
+  a.href = url;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
   const orig = btn.innerHTML;
-  btn.innerHTML = "<span>Baixando...</span><span class=\"btn-right\">aguarde</span>";
+  btn.innerHTML = '<span>✓ Iniciando download…</span><span class="btn-right">ok</span>';
   btn.disabled = true;
-  try {
-    const res = await fetch(url);
-    const blob = await res.blob();
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = nome;
-    a.click();
-    URL.revokeObjectURL(a.href);
-    btn.innerHTML = "<span>✓ Download concluído</span><span class=\"btn-right\">ok</span>";
-    setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; }, 3000);
-  } catch(e) {
-    btn.innerHTML = orig;
-    btn.disabled = false;
-    window.open(url, "_blank");
-  }
+  setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; }, 3000);
 }
 </script>
 </body>
