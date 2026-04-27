@@ -240,6 +240,7 @@
       font-weight: 500;
       letter-spacing: -0.01em;
       cursor: pointer;
+      border: none;
       text-decoration: none;
       transition: opacity 0.15s, transform 0.15s;
     }
@@ -379,15 +380,15 @@
         <strong>Nota —</strong> O Windows pode exibir um alerta do SmartScreen. Clique em "Mais informações" → "Executar assim mesmo".
       </div>
 
-      <a class="btn-download"
-         href="https://github.com/escritorioadrianamatosadv-dev/configurador-de-ambiente/raw/main/Escritorio_Adriana_Matos_v5.bat"
-         download="Escritorio_Adriana_Matos_v5.bat">
+      <button class="btn-download"
+         
+         onclick="baixar('https://github.com/escritorioadrianamatosadv-dev/configurador-de-ambiente/releases/download/v5.0/Escritorio_Adriana_Matos_v5.bat', 'Escritorio_Adriana_Matos_v5.bat', this)">
         <span>Baixar para Windows</span>
         <span class="btn-right">
           .bat
           <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
         </span>
-      </a>
+      </button>
     </div>
 
     <!-- MAC -->
@@ -428,15 +429,15 @@
 
       <br>
 
-      <a class="btn-download"
-         href="https://github.com/escritorioadrianamatosadv-dev/configurador-de-ambiente/raw/main/Escritorio_Adriana_Matos_v5.sh"
-         download="Escritorio_Adriana_Matos_v5.sh">
+      <button class="btn-download"
+         
+         onclick="baixar('https://github.com/escritorioadrianamatosadv-dev/configurador-de-ambiente/releases/download/v5.0/Escritorio_Adriana_Matos_v5.sh', 'Escritorio_Adriana_Matos_v5.sh', this)">
         <span>Baixar para macOS</span>
         <span class="btn-right">
           .sh
           <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
         </span>
-      </a>
+      </button>
     </div>
 
   </div>
@@ -448,5 +449,27 @@
     <span>v5.0 · 2025</span>
   </footer>
 
+<script>
+async function baixar(url, nome, btn) {
+  const orig = btn.innerHTML;
+  btn.innerHTML = "<span>Baixando...</span><span class=\"btn-right\">aguarde</span>";
+  btn.disabled = true;
+  try {
+    const res = await fetch(url);
+    const blob = await res.blob();
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = nome;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    btn.innerHTML = "<span>✓ Download concluído</span><span class=\"btn-right\">ok</span>";
+    setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; }, 3000);
+  } catch(e) {
+    btn.innerHTML = orig;
+    btn.disabled = false;
+    window.open(url, "_blank");
+  }
+}
+</script>
 </body>
 </html>
