@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Escritório Adriana Matos — Configurador</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0e0e0e;
+      --surface:   #161616;
+      --border:    #2a2a2a;
+      --border-hi: #3d3d3d;
+      --text:      #f0f0f0;
+      --muted:     #666;
+      --accent:    #ffffff;
+      --win:       #f0f0f0;
+      --mac:       #f0f0f0;
+      --radius:    18px;
+      --radius-sm: 10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 24px 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── HEADER ── */
+    header {
+      width: 100%;
+      max-width: 560px;
+      padding: 72px 0 48px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      border: 1.5px solid var(--border-hi);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 32px;
+      background: var(--surface);
+    }
+
+    .logo-mark svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--muted);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+    }
+
+    .eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(26px, 5vw, 34px);
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 400px;
+    }
+
+    /* ── CARDS ── */
+    .cards {
+      width: 100%;
+      max-width: 560px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 28px 24px;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: default;
+    }
+
+    .card:hover {
+      border-color: var(--border-hi);
+      transform: translateY(-1px);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      border: 1px solid var(--border-hi);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .card-icon svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: var(--muted);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+
+    .card-os {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* steps */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .step-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: #333;
+      background: #1e1e1e;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* note box */
+    .note {
+      background: #111;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-size: 12px;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .note strong {
+      color: #777;
+      font-weight: 500;
+    }
+
+    /* download button */
+    .btn-download {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: var(--accent);
+      color: #0e0e0e;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+
+    .btn-download:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+    }
+
+    .btn-download:active {
+      transform: translateY(0);
+      opacity: 0.75;
+    }
+
+    .btn-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      font-weight: 400;
+      color: #555;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-right svg {
+      width: 13px;
+      height: 13px;
+      stroke: #555;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* mac terminal note */
+    .terminal-note {
+      margin-top: 16px;
+      background: #0a0a0a;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11.5px;
+      color: #444;
+      line-height: 1.8;
+    }
+
+    .terminal-note .prompt { color: #2a2a2a; }
+    .terminal-note .cmd    { color: #666; }
+    .terminal-note .comment{ color: #2e2e2e; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 100%;
+      max-width: 560px;
+      height: 1px;
+      background: var(--border);
+      margin: 32px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      width: 100%;
+      max-width: 560px;
+      font-size: 11px;
+      color: #333;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.04em;
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── FADE IN ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    header  { animation: fadeUp 0.5s ease both; }
+    .card:nth-child(1) { animation: fadeUp 0.5s 0.1s ease both; }
+    .card:nth-child(2) { animation: fadeUp 0.5s 0.18s ease both; }
+    .divider, footer   { animation: fadeUp 0.5s 0.28s ease both; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M12 8v8"/></svg>
+    </div>
+    <p class="eyebrow">Escritório Adriana Matos</p>
+    <h1>Configurador<br>de Ambiente</h1>
+    <p class="subtitle">Instala e configura automaticamente o ambiente necessário. Escolha o arquivo correspondente ao seu sistema.</p>
+  </header>
+
+  <div class="cards">
+
+    <!-- WINDOWS -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">
+          <!-- Windows logo simplificado -->
+          <svg viewBox="0 0 16 16">
+            <rect x="1" y="1" width="6.5" height="6.5" rx="0.5"/>
+            <rect x="8.5" y="1" width="6.5" height="6.5" rx="0.5"/>
+            <rect x="1" y="8.5" width="6.5" height="6.5" rx="0.5"/>
+            <rect x="8.5" y="8.5" width="6.5" height="6.5" rx="0.5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="card-title">Windows</div>
+          <div class="card-os">10 / 11 · x64</div>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <span>Baixe o arquivo <code>.bat</code> abaixo</span>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <span>Clique com botão direito → <strong style="color:#888">Executar como administrador</strong></span>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <span>Não feche a janela durante o processo</span>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>Nota —</strong> O Windows pode exibir um alerta do SmartScreen. Clique em "Mais informações" → "Executar assim mesmo".
+      </div>
+
+      <a class="btn-download"
+         href="https://gist.githubusercontent.com/escritorioadrianamatosadv-dev/8879ce890471381e21e1d484bfb6ebcc/raw/Escritorio_Adriana_Matos_v5.bat"
+         download="Escritorio_Adriana_Matos_v5.bat">
+        <span>Baixar para Windows</span>
+        <span class="btn-right">
+          .bat
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </span>
+      </a>
+    </div>
+
+    <!-- MAC -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">
+          <!-- Apple logo simplificado -->
+          <svg viewBox="0 0 16 16">
+            <path d="M11.5 3.5c.8-.9.7-2.5.7-2.5s-1.5.1-2.4 1c-.8.8-.8 2.1-.8 2.1s1.6.2 2.5-1.6z"/>
+            <path d="M13.5 10.5c-.5 1.1-1.1 1.8-1.8 2.3-.7.5-1.3.7-2 .7-.7 0-1.2-.2-1.8-.5-.5-.3-1-.5-1.6-.5-.6 0-1.2.2-1.7.5-.5.3-1 .5-1.6.5-.7 0-1.4-.3-2.1-.9C.2 12 0 10.5 0 9c0-1.4.4-2.6 1.1-3.5.7-.9 1.7-1.4 3-1.4.7 0 1.3.2 1.9.5.5.3 1 .5 1.5.5.5 0 1-.2 1.5-.5.6-.3 1.2-.5 1.9-.5 1 0 1.9.4 2.6 1.1-.9.6-1.4 1.4-1.4 2.5 0 1.2.6 2.2 1.4 2.8z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="card-title">macOS</div>
+          <div class="card-os">Monterey ou superior · Apple Silicon & Intel</div>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <span>Baixe o arquivo <code>.sh</code> abaixo</span>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <span>Abra o Terminal e cole os comandos abaixo</span>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <span>Não feche o Terminal durante o processo</span>
+        </div>
+      </div>
+
+      <div class="terminal-note">
+        <span class="prompt">$ </span><span class="cmd">chmod +x ~/Downloads/Escritorio_Adriana_Matos_v5.sh</span><br>
+        <span class="prompt">$ </span><span class="cmd">~/Downloads/Escritorio_Adriana_Matos_v5.sh</span>
+      </div>
+
+      <br>
+
+      <a class="btn-download"
+         href="https://gist.githubusercontent.com/escritorioadrianamatosadv-dev/5795318d6a3596b5404bd33f143cbb5e/raw/23113d43ca12b9ce076fdbce51d02ff7f81a54c3/setup_mac.py"
+         download="Escritorio_Adriana_Matos_v5.sh">
+        <span>Baixar para macOS</span>
+        <span class="btn-right">
+          .sh
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </span>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <footer>
+    <span>© Escritório Adriana Matos</span>
+    <span>v5.0 · 2025</span>
+  </footer>
+
+</body>
+</html>
